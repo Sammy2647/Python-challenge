@@ -1,0 +1,43 @@
+
+# Import Dependencies
+# sourcery skip: aug-assign
+import os
+import csv
+
+# Declare file location
+csvpath = os.path.join('python-challenge/PyPoll/election_data.csv')
+
+
+total_votes = 0
+runner_choice = []
+runner_votes = {}
+victor_candidate = ""
+victor_count = 0
+
+# read csv
+with open(csvpath) as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
+
+    # skip header
+    csv_header = next(csvreader)
+
+    for row in csvreader:
+        
+        total_votes = total_votes + 1
+        
+        runner_name = row[2]
+
+        if runner_name not in runner_options:
+            runner_options.append(runner_name)
+
+            runner_votes[runner_name] = 0
+        
+        runner_votes[runner_name] = runner_votes[runner_name] + 1
+
+    for runner in runner_votes:
+        votes = runner_votes.get(runner)
+        vote_percent = (votes / total_votes) * 100
+
+print(total_votes)
+print(runner_votes)
+print(vote_percent,"%")
